@@ -2,8 +2,8 @@
 version: '3'
 
 vars:
-  PROJECT_NAME: no-name-project
-  VIEWS_TYPE: livewire
+  PROJECT_NAME: '{{or (env "PROJECT_NAME") "no-name-project"}}'
+  VIEWS_TYPE: '{{or (env "VIEWS_TYPE") "livewire"}}'
 
 tasks:
   default:
@@ -16,33 +16,29 @@ tasks:
       - 'echo "Usage:"'
       - 'task --list'
 
-  confirm:
-    cmds:
-      - 'echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]'
-
   setup:
     cmds:
-      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-php-setup'
-      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-node-setup'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up php-setup'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up node-setup'
       - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose down --rmi all'
     desc: 'Setup project'
 
   down:
     desc: 'Stop all containers'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down'
 
   clean:
     desc: 'Stop all containers and remove all images'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down --rmi all'
 
   destroy:
     desc: 'Destroy all project files, containers and images'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down --rmi all'
       - 'rm -rf {{.PROJECT_NAME}}'
       - 'rm -rf postgres'
@@ -51,14 +47,15 @@ tasks:
   start-dev:
     desc: 'Start project in development mode'
     cmds:
-      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-php-dev'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up php-dev'
 
   rebuild-dev:
     desc: 'Rebuild debug image'
     cmds:
-      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose build web-php-dev'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose build php-dev'
 
   eject:
     desc: 'Eject project from jetstream-setup'
+    prompt: 'Are you sure?'
     cmds:
       - './eject.sh {{.PROJECT_NAME}}'

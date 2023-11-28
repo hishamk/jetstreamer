@@ -18,7 +18,7 @@ Both Makefile and Taskfile are available for your convenience. You can use eithe
 
 #### Taskfile
 
-If you're using Taskfile, you can replace `make` with `task` in the commands below and vars such as PROJECT_NAME=value with --PROJECT_NAME=value for instance.
+If you're using Taskfile, you can replace `make` with `task` in the commands below and vars such as `PROJECT_NAME=value make setup` with `PROJECT_NAME=value task setup` for instance.
 
 #### Setup Project
 

@@ -11,7 +11,7 @@ services:
     env_file:
       - "./envs/postgres/.env"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER"]
+      test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -56,11 +56,10 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile-php.dev
-    container_name: php-common
     image: ${PROJECT_NAME}/php:latest
 
   # PHP for Laravel setup
-  web-php-setup:
+  php-setup:
     <<: *php-common
     volumes:
       - ".:/setup"

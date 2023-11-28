@@ -36,8 +36,8 @@ confirm:
 ## setup: setup project
 .PHONY: setup
 setup:
-	PROJECT_NAME=$(PROJECT_NAME) docker-compose up web-php-setup && \
-	PROJECT_NAME=$(PROJECT_NAME) docker-compose up web-node-setup && \
+	PROJECT_NAME=$(PROJECT_NAME) docker-compose up php-setup && \
+	PROJECT_NAME=$(PROJECT_NAME) docker-compose up node-setup && \
 	PROJECT_NAME=$(PROJECT_NAME) docker-compose down --rmi all
 
 
@@ -66,13 +66,13 @@ destroy: confirm
 ## start-dev: start project in development mode
 .PHONY: start-dev
 start-dev:
-	PROJECT_NAME=$(PROJECT_NAME) docker-compose up web-php-dev
+	PROJECT_NAME=$(PROJECT_NAME) docker-compose up php-dev
 
 	
 ## rebuild-dev: rebuild debug image
 .PHONY: rebuild-dev
 rebuild-dev:
-	PROJECT_NAME=$(PROJECT_NAME) docker-compose build web-php-dev
+	PROJECT_NAME=$(PROJECT_NAME) docker-compose build php-dev
 
 ## eject: eject project from jetstream-setup
 .PHONY: eject

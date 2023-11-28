@@ -10,6 +10,11 @@ services:
       - "./postgres/data:/var/lib/postgresql/data"
     env_file:
       - "./envs/postgres/.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Redis for Laravel
   redis:
@@ -27,7 +32,6 @@ services:
   # Node common
   node-common: &node-common
     image: arm64v8/node:20.9-alpine3.18
-    container_name: node-common
     working_dir: "/${PROJECT_NAME}"
     volumes:
       - "./${PROJECT_NAME}:/${PROJECT_NAME}"
@@ -44,7 +48,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile-php.dev
-    container_name: php-common
     image: ${PROJECT_NAME}/php:latest
 
   # PHP for Laravel dev

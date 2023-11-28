@@ -2,8 +2,8 @@
 version: '3'
 
 vars:
-  PROJECT_NAME: no-name-project
-  VIEWS_TYPE: livewire
+  PROJECT_NAME: '{{or (env "PROJECT_NAME") "no-name-project"}}'
+  VIEWS_TYPE: '{{or (env "VIEWS_TYPE") "livewire"}}'
 
 tasks:
   default:
@@ -16,26 +16,22 @@ tasks:
       - 'echo "Usage:"'
       - 'task --list'
 
-  confirm:
-    cmds:
-      - 'echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]'
-
   down:
     desc: 'Stop all containers'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down'
 
   clean:
     desc: 'Stop all containers and remove all images'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down --rmi all'
 
   destroy:
     desc: 'Destroy all project files, containers and images'
+    prompt: 'Are you sure?'
     cmds:
-      - 'task: confirm'
       - 'docker-compose down --rmi all'
       - 'rm -rf postgres'
       - 'rm -rf .docker'
