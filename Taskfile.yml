@@ -1,0 +1,64 @@
+# Taskfile.yml
+version: '3'
+
+vars:
+  PROJECT_NAME: no-name-project
+  VIEWS_TYPE: livewire
+
+tasks:
+  default:
+    cmds:
+      - 'task --list'
+    desc: 'Display available tasks'
+
+  help:
+    cmds:
+      - 'echo "Usage:"'
+      - 'task --list'
+
+  confirm:
+    cmds:
+      - 'echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]'
+
+  setup:
+    cmds:
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-php-setup'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-node-setup'
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose down --rmi all'
+    desc: 'Setup project'
+
+  down:
+    desc: 'Stop all containers'
+    cmds:
+      - 'task: confirm'
+      - 'docker-compose down'
+
+  clean:
+    desc: 'Stop all containers and remove all images'
+    cmds:
+      - 'task: confirm'
+      - 'docker-compose down --rmi all'
+
+  destroy:
+    desc: 'Destroy all project files, containers and images'
+    cmds:
+      - 'task: confirm'
+      - 'docker-compose down --rmi all'
+      - 'rm -rf {{.PROJECT_NAME}}'
+      - 'rm -rf postgres'
+      - 'rm -rf .docker'
+
+  start-dev:
+    desc: 'Start project in development mode'
+    cmds:
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose up web-php-dev'
+
+  rebuild-dev:
+    desc: 'Rebuild debug image'
+    cmds:
+      - 'PROJECT_NAME={{.PROJECT_NAME}} docker-compose build web-php-dev'
+
+  eject:
+    desc: 'Eject project from jetstream-setup'
+    cmds:
+      - './eject.sh {{.PROJECT_NAME}}'

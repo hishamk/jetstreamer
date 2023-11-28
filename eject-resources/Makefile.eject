@@ -1,0 +1,49 @@
+# ==================================================================================== #
+# Ejected Laravel+Jetstream Makefile
+# ==================================================================================== #
+
+# ==================================================================================== #
+# HELPERS
+# ==================================================================================== #
+
+## help: print this help message
+.PHONY: help
+help:
+	@echo 'Usage:'
+	@sed -n 's/^##//p' ${MAKEFILE_LIST} | column -t -s ':' | sed -e 's/^/ /'
+
+.PHONY: confirm
+confirm:
+	@echo -n 'Are you sure? [y/N] ' && read ans && [ $${ans:-N} = y ]
+
+## down: stop all containers
+.PHONY: down
+down: confirm
+	docker-compose down
+
+## clean: stop all containers and remove all images
+.PHONY: clean
+clean: confirm
+	docker-compose down --rmi all
+
+## destroy: destroy all project files, containers and images
+.PHONY: destroy
+destroy: confirm
+	docker-compose down --rmi all
+	rm -rf postgres
+	rm -rf .docker
+
+# ==================================================================================== #
+# DEVELOPMENT
+# ==================================================================================== #
+
+## start-dev: start project in development mode
+.PHONY: start-dev
+start-dev:
+	docker-compose up web-php-dev
+
+	
+## rebuild-dev: rebuild debug image
+.PHONY: rebuild-dev
+rebuild-dev:
+	docker-compose build web-php-dev
