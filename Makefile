@@ -77,4 +77,4 @@ rebuild-dev:
 ## eject: eject project from jetstream-setup
 .PHONY: eject
 eject:
-	./eject.sh $(PROJECT_NAME)
+	./eject-resources/eject.sh $(PROJECT_NAME)

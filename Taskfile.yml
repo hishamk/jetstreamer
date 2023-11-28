@@ -1,4 +1,7 @@
-# Taskfile.yml
+# ==================================================================================== #
+# Boilerplate Laravel+Jetstream Makefile
+# ==================================================================================== #
+
 version: '3'
 
 vars:
@@ -56,6 +59,5 @@ tasks:
 
   eject:
     desc: 'Eject project from jetstream-setup'
-    prompt: 'Are you sure?'
     cmds:
-      - './eject.sh {{.PROJECT_NAME}}'
+      - './eject-resources/eject.sh {{.PROJECT_NAME}}'
