@@ -76,9 +76,11 @@ services:
     working_dir: "/${PROJECT_NAME}"
     ports:
       - "9000:9000"
-      - "9003:9003"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - "./${PROJECT_NAME}:/${PROJECT_NAME}"
+      # Note we're sharing the xdebug.ini *FILE* not the directory
       - "./.docker/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
     environment:
       - REDIS_URL=redis://redis:6379
@@ -87,7 +89,7 @@ services:
     tty: true
     command: >
       'php artisan migrate &&
-      php artisan serve --host=0.0.0.0 --port=9000'
+       XDEBUG_MODE=debug XDEBUG_SESSION=1 php artisan serve --host=0.0.0.0 --port=9000'
     depends_on:
       postgres:
         condition: service_healthy

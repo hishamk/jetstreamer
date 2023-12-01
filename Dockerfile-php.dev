@@ -32,8 +32,16 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install zip
 
 # Install xDebug
-RUN pecl install xdebug-3.2.1 \
-    && docker-php-ext-enable xdebug
+RUN pecl install xdebug-3.2.2
+
+# Enable xDebug
+# RUN docker-php-ext-enable xdebug # we will enable it via xdebug.ini zend_extension=xdebug.so
+
+# Copy php.ini
+COPY ./php.ini /usr/local/etc/php/
+
+# Copy xdebug.ini
+# COPY ./xdebug.ini /usr/local/etc/php/conf.d/
 
 # Install Redis extension
 RUN pecl install -o -f redis \
@@ -52,5 +60,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set proper shell as entry point
 ENTRYPOINT ["/bin/bash", "-c"]
 
-# Expose ports for artisan serve and xdebug3
-EXPOSE 9000 9003
+# Expose ports for artisan serve
+EXPOSE 9000
