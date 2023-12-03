@@ -68,6 +68,7 @@ services:
       cd /setup/${PROJECT_NAME} &&
       composer require laravel/jetstream &&
       php artisan jetstream:install livewire --teams &&
+      composer require livewire/volt &&
       cp /setup/envs/default_laravel.env ./.env'
 
   # PHP for Laravel dev
