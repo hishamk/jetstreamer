@@ -7,16 +7,10 @@
 # ==================================================================================== #
 
 PROJECT_NAME ?= no-name-project
-VIEWS_TYPE ?= livewire
 
 # if request is eject, then set PROJECT_NAME to $(PROJECT_NAME)
 ifeq ($(filter $(MAKECMDGOALS),eject),eject)
 PROJECT_NAME = $(PROJECT_NAME)
-endif
-
-# if VIEWS_TYPE is neither blank, inertia or livewire, then stop with error
-ifeq ($(filter $(VIEWS_TYPE),inertia livewire),)
-$(error VIEWS_TYPE must be inertia or livewire)
 endif
 
 # ==================================================================================== #

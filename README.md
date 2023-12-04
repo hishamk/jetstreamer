@@ -4,7 +4,7 @@ _No frills Laravel Jetstream development setup with no fancy magic_
 
 [![MIT](https://img.shields.io/github/license/hishamk/jetstreamer)](https://img.shields.io/github/license/hishamk/jetstreamer)
 
-Ahoy! This is a boilerplate setup for Laravel projects using Jetstream (+teams) and Postgres. It's configured to use Docker and Docker Compose for development. It also includes a Makefile and Taskfile for your convenience.
+Ahoy! This is a boilerplate setup for Laravel projects using Jetstream (+teams +Livewire +Volt) and Postgres. It's configured to use Docker and Docker Compose for development. It also includes a Makefile and Taskfile for your convenience.
 
 Once you're done setting up your project, you can start developing your Laravel project with Jetstream right away. When you're ready to deploy your project, you can use the `eject` command to remove the boilerplate from your project.
 
@@ -25,10 +25,10 @@ If you're using Taskfile, you can replace `make` with `task` in the commands bel
 Use the following command to set up your project:
 
 ```bash
-make setup PROJECT_NAME=<project_name=no-name-project> VIEWS_TYPE=<[livewire,inertia]>
+make setup PROJECT_NAME=<project_name=no-name-project>
 ```
 
-Replace `<project_name>` with your desired project name and choose between `livewire` or `inertia` for `VIEWS_TYPE` depending on your preference. This command initializes your project.
+Replace `<project_name>` with your desired project name. This command initializes your project.
 
 #### Start Development Containers
 
